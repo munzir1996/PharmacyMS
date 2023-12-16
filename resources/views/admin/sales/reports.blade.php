@@ -145,27 +145,34 @@
 				buttons: [
 					{
 						extend: 'pdf',
+                        footer: true,
 						exportOptions: {
 							columns: "thead th:not(.action-btn)"
-						}
+						},
+                        stripHtml: false
 					},
 					{
 						extend: 'excel',
+                        footer: true,
 						exportOptions: {
 							columns: "thead th:not(.action-btn)"
-						}
+						},
+                        stripHtml: false
 					},
 					{
 						extend: 'csv',
+                        footer: true,
 						exportOptions: {
 							columns: "thead th:not(.action-btn)"
-						}
+						},
+                        stripHtml: false
 					},
 					{
 						extend: 'print',
+                        footer: true,
 						exportOptions: {
 							columns: "thead th:not(.action-btn)"
-						}
+						},
 					}
 				]
 				}

@@ -107,20 +107,19 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-
         $salesCollect = collect(
             [
                 'sales' => json_decode($request->sales[0]),
                 'totalPrice' => $request->totalPrice,
                 'invoiceId' => $request->invoiceId,
-                'date' => $request->date,
+                // 'date' => $request->date,
             ]
         );
 
         $order = Order::create([
             'invoice_id' => $salesCollect['invoiceId'],
             'user_id' => Auth::user()->id,
-            'date' => $salesCollect['date'],
+            'date' => date('Y-m-d H:i:s'),
         ]);
 
         foreach ($salesCollect['sales'] as $sale) {
@@ -388,7 +387,7 @@ class SaleController extends Controller
         $invoiceId = Auth::user()->id.'-'.substr(Auth::user()->name, 0, 3).'-'.random_int(100000, 999999);
 
         return view('admin.sales.receipt', [
-            'date' => date('Y-m-d H:i:s'),
+            // 'date' => date('Y-m-d H:i:s'),
             'sales' => $salesCollect,
             'totalPrice' => $totalPrice,
             'invoiceId' => $invoiceId,

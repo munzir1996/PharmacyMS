@@ -60,6 +60,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function(){
     Route::post('sales/reports',[SaleController::class,'generateReport']);
     Route::get('sales/receipts',[SaleController::class,'receipt'])->name('sales.receipt');
     Route::resource('orders',OrderController::class);
+    Route::get('orders-reports',[OrderController::class,'x'])->name('orders.report');
+    Route::post('orders-reports',[OrderController::class,'generateReport']);
 
     Route::get('backup', [BackupController::class,'index'])->name('backup.index');
     Route::put('backup/create', [BackupController::class,'create'])->name('backup.store');

@@ -10,6 +10,7 @@ class Sale extends Model
 {
     use HasFactory,SoftDeletes;
 
+    protected $with = ['purchase', 'product', 'user'];
     protected $fillable = [
         'order_id', 'user_id', 'product_id','quantity','total_price'
     ];

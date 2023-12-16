@@ -9,10 +9,10 @@
 
 @push('page-header')
 <div class="col-sm-7 col-auto">
-	<h3 class="page-title">Sales Reports</h3>
+	<h3 class="page-title">Orders Reports</h3>
 	<ul class="breadcrumb">
 		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-		<li class="breadcrumb-item active">Generate Sales Reports</li>
+		<li class="breadcrumb-item active">Generate Orders Reports</li>
 	</ul>
 </div>
 <div class="col-sm-5 col">
@@ -24,47 +24,46 @@
 <div class="row">
 	<div class="col-md-12">
 
-		@isset($sales)
-            <!--  Sales Report -->
+		@isset($orders)
+            <!--  Orders Report -->
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="sales-table" class="datatable table table-hover table-center mb-0">
+                        <table id="orders-table" class="datatable table table-hover table-center mb-0">
                             <thead>
                                 <tr>
-                                    <th>Medicine Name</th>
-                                    <th>Quantity</th>
+                                    <th>ID</th>
+                                    <th>Invoice ID</th>
                                     <th>Total Price</th>
                                     <th>Date</th>
                                     <th>User</th>
                                 </tr>
                             </thead>
+                            <tfoot>
+                                <th>Total:</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tfoot>
                             <tbody>
-                                @foreach ($sales as $sale)
-                                    @if (!(empty($sale->product->purchase)))
-                                        <tr>
-                                            <td>
-                                                {{$sale->product->purchase->product}}
-                                                @if (!empty($sale->product->purchase->image))
-                                                    <span class="avatar avatar-sm mr-2">
-                                                    <img class="avatar-img" src="{{asset("storage/purchases/".$sale->product->purchase->image)}}" alt="image">
-                                                    </span>
-                                                @endif
-                                            </td>
-                                            <td>{{$sale->quantity}}</td>
-                                            <td>{{AppSettings::get('app_currency', '$')}} {{($sale->total_price)}}</td>
-                                            <td>{{date_format(date_create($sale->created_at),"d M, Y")}}</td>
-                                            <td>{{$sale->user->name}}</td>
-
-                                        </tr>
-                                    @endif
+                                @foreach ($orders as $order)
+                                    <tr>
+                                        <td>
+                                            {{$order->id}}
+                                        </td>
+                                        <td>{{$order->invoice_id}}</td>
+                                        <td>{{$order->totalPrice}}</td>
+                                        <td>{{$order->date}}</td>
+                                        <td>{{$order->user->name}}</td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <!-- / sales Report -->
+            <!-- / orders Report -->
         @endisset
 
 
@@ -82,7 +81,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{route('sales.report')}}">
+				<form method="post" action="{{route('orders.report')}}">
 					@csrf
 					<div class="row form-row">
 						<div class="col-12">
@@ -129,7 +128,7 @@
 @push('page-js')
 <script>
     $(document).ready(function(){
-        $('#sales-table').DataTable({
+        $('#orders-table').DataTable({
 			dom: 'Bfrtip',
 			buttons: [
 				{
@@ -138,31 +137,58 @@
 				buttons: [
 					{
 						extend: 'pdf',
+                        footer: true,
 						exportOptions: {
 							columns: "thead th:not(.action-btn)"
-						}
+						},
+                        stripHtml: false
 					},
 					{
 						extend: 'excel',
+                        footer: true,
 						exportOptions: {
 							columns: "thead th:not(.action-btn)"
-						}
+						},
+                        stripHtml: false
 					},
 					{
 						extend: 'csv',
+                        footer: true,
 						exportOptions: {
 							columns: "thead th:not(.action-btn)"
-						}
+						},
+                        stripHtml: false
 					},
 					{
 						extend: 'print',
+                        footer: true,
 						exportOptions: {
 							columns: "thead th:not(.action-btn)"
-						}
+						},
 					}
 				]
 				}
 			],
+            "footerCallback": function (row, data, start, end, display) {
+                        var api = this.api();
+                        nb_cols = api.columns().nodes().length;
+                        var j = 2;
+                        while (j <= 2) {
+                            var pageTotal = api
+                                .column(j, {page: 'current'})
+                                .data()
+                                .reduce(function (a, b) {
+                                    var x = parseFloat(a);
+                                    var y = parseFloat(b)
+                                    // var y = isNaN(parseFloat(b))?0:parseFloat(b);
+                                    let result=x + y;
+                                    return result
+                                }, 0);
+                            // Update footer
+                            $(api.column(j).footer()).html(pageTotal);
+                            j++;
+                        }
+                    }
 		});
     });
 </script>

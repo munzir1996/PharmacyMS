@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -39,12 +42,12 @@ class OrderController extends Controller
                         return $order->user->name;
                     })
                     ->addColumn('action', function ($row) {
-                        $editbtn = '<a href="'.route("sales.edit", $row->id).'" class="editbtn"><button class="btn btn-info"><i class="fas fa-edit"></i></button></a>';
-                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('sales.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
+                        $editbtn = '<a href="'.route("orders.show", $row->id).'" class="editbtn"><button class="btn btn-warning"><i class="fe fe-document text-white"></i></button></a>';
+                        $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('orders.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
                         if (!auth()->user()->hasPermissionTo('edit-order')) {
                             $editbtn = '';
                         }
-                        if (!auth()->user()->hasPermissionTo('destroy-orders')) {
+                        if (!auth()->user()->hasPermissionTo('destroy-order')) {
                             $deletebtn = '';
                         }
                         $btn = $editbtn.' '.$deletebtn;
@@ -88,7 +91,9 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        return view('admin.orders.receipt', [
+            'order' => $order,
+        ]);
     }
 
     /**
@@ -120,8 +125,36 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(Request $request)
     {
-        //
+        return Order::findOrFail($request->id)->delete();
+    }
+
+    public function x(Request $request){
+        $title = 'orders reports';
+        return view('admin.orders.reports',[
+            'title' => $title,
+        ]);
+    }
+
+    public function generateReport(Request $request)
+    {
+        $this->validate($request,[
+            'from_date' => 'required',
+            'to_date' => 'required',
+            'user_id' => 'nullable',
+        ]);
+
+        $title = 'orders reports';
+
+        if (!empty($request->user_id)) {
+            $orders = Order::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->Where('user_id', $request->user_id)->get();
+        } else {
+            $orders = Order::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
+        }
+
+        return view('admin.orders.reports',compact(
+            'orders','title'
+        ));
     }
 }

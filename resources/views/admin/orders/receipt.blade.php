@@ -41,7 +41,7 @@ table tr.items td {
 
 @push('page-header')
 <div class="col-sm-12">
-	<h3 class="page-title">Receipt Sale</h3>
+	<h3 class="page-title">Order Receipt</h3>
 	{{-- <ul class="breadcrumb">
 		<li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
 		<li class="breadcrumb-item active">Receipt Sale</li>
@@ -55,8 +55,8 @@ table tr.items td {
 		<div class="card">
 			<div class="card-body custom-edit-service">
                 <!-- Create Sale -->
-                <form method="POST" action="{{route('sales.store')}}">
-					@csrf
+                {{-- <form method="POST" action="{{route('sales.store')}}">
+					@csrf --}}
                     <div class="container">
 
                         <div class="row justify-content-between">
@@ -64,7 +64,7 @@ table tr.items td {
                                 <img src="@if(!empty(AppSettings::get('logo'))) {{asset('storage/'.AppSettings::get('logo'))}} @else{{asset('assets/img/pharrrlg.png')}} @endif" alt="Logo">
                             </a>
 
-                            <h3 class="page-title">Invoice ID: {{$invoiceId}}</h3>
+                            <h3 class="page-title">Invoice ID: {{$order->invoice_id}}</h3>
                         </div>
 
                         <div class="row mt-4 justify-content-between">
@@ -74,7 +74,7 @@ table tr.items td {
                             </div>
                             <div class="row">
                                 <h5 class="font-weight-bold">Date:</h5>
-                                <p>{{$date}}</p>
+                                <p>{{$order->date}}</p>
                             </div>
                         </div>
 
@@ -85,16 +85,16 @@ table tr.items td {
                                     <th>Quantity</th>
                                     <th>Price</th>
                                 </tr>
-                                @foreach ($sales as $key => $sale)
+                                @foreach ($order->sales as $key => $sale)
                                 <tr class="items">
                                     <td>
-                                        {{$sale['product']}}
+                                        {{$sale->product->purchase->product}}
                                     </td>
                                     <td>
-                                        {{$sale['quantity']}}
+                                        {{$sale->quantity}}
                                     </td>
                                     <td>
-                                        {{AppSettings::get('app_currency', '$')}} {{$sale['discountedPrice']}}
+                                        {{AppSettings::get('app_currency', '$')}} {{$sale->total_price}}
                                     </td>
 
                                 </tr>
@@ -103,7 +103,7 @@ table tr.items td {
                         </div>
 
                         <div class="total">
-                            Total: {{AppSettings::get('app_currency', '$')}}{{$totalPrice}}
+                            Total: {{AppSettings::get('app_currency', '$')}}{{$order->totalPrice}}
                         </div>
 
                         <div class="footer margin-top">
@@ -111,13 +111,13 @@ table tr.items td {
                             <div>&copy; {{AppSettings::get('app_name', 'App')}}</div>
                         </div>
 
-                        <input name="sales[]" value={{$sales}} hidden>
+                        {{-- <input name="sales[]" value={{$sales}} hidden>
                         <input name="totalPrice" value={{$totalPrice}} hidden>
                         <input name="invoiceId" value={{$invoiceId}} hidden>
-                        <button type="submit" class="btn btn-success btn-block mt-3">Order</button>
+                        <button type="submit" class="btn btn-success btn-block mt-3">Order</button> --}}
                     </div>
 
-				</form>
+				{{-- </form> --}}
                 <!--/ Create Sale -->
 			</div>
 		</div><!-- Visit codeastro.com for more projects -->

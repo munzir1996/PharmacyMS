@@ -10,6 +10,7 @@ class Order extends Model
 {
     use HasFactory,SoftDeletes;
 
+    protected $with = ['sales'];
     protected $fillable = [
         'user_id','total_price', 'invoice_id', 'date'
     ];

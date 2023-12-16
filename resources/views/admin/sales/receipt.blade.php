@@ -72,10 +72,10 @@ table tr.items td {
                                 <h5 class="font-weight-bold">Sold by:</h5>
                                 <p>{{Auth::user()->name}}</p>
                             </div>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <h5 class="font-weight-bold">Date:</h5>
                                 <p>{{$date}}</p>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="margin-top">
@@ -114,6 +114,7 @@ table tr.items td {
                         <input name="sales[]" value={{$sales}} hidden>
                         <input name="totalPrice" value={{$totalPrice}} hidden>
                         <input name="invoiceId" value={{$invoiceId}} hidden>
+                        {{-- <input name="date" type="string" value={{$date}} hidden> --}}
                         <button type="submit" class="btn btn-success btn-block mt-3">Order</button>
                     </div>
 

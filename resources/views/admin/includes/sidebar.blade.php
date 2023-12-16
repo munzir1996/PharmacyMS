@@ -68,11 +68,11 @@
 					</ul>
 				</li>
 				@endcan
-
 				@can('view-reports')
 				<li class="submenu">
 					<a href="#"><i class="fe fe-document"></i> <span> Reports</span> <span class="fas fa-chevron-down"></span></a>
 					<ul style="display: none;">
+						<li><a class="{{ route_is('orders.report') ? 'active' : '' }}" href="{{route('orders.report')}}">Order Report</a></li>
 						<li><a class="{{ route_is('sales.report') ? 'active' : '' }}" href="{{route('sales.report')}}">Sale Report</a></li>
 						<li><a class="{{ route_is('purchases.report') ? 'active' : '' }}" href="{{route('purchases.report')}}">Purchase Report</a></li>
 					</ul>
