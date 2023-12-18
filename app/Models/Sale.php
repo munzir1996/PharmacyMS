@@ -12,7 +12,7 @@ class Sale extends Model
 
     protected $with = ['purchase', 'product', 'user'];
     protected $fillable = [
-        'order_id', 'user_id', 'product_id','quantity','total_price'
+        'order_id', 'user_id', 'product_id','quantity','total_price', 'total_profit',
     ];
 
     public function user(){

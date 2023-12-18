@@ -3,7 +3,7 @@
 <x-assets.datatables />
 
 @push('page-css')
-    
+
 @endpush
 
 @push('page-header')
@@ -22,7 +22,7 @@
 @section('content')
 <div class="row">
 	<div class="col-md-12">
-	
+
 		<!-- Suppliers -->
 		<div class="card">
 			<div class="card-body">
@@ -30,10 +30,11 @@
 					<table id="supplier-table" class="datatable table table-hover table-center mb-0">
 						<thead>
 							<tr>
+								<th>ID</th>
 								<th>Product</th>
 								<th>Name</th>
-								<th>Phone</th>
 								<th>Email</th>
+								<th>Phone</th>
 								<th>Address</th>
 								<th>Company</th>
 								<th class="action-btn">Action</th>
@@ -42,7 +43,7 @@
 						<tbody>
 							{{-- @foreach ($suppliers as $supplier)
 							<tr>
-								<td>										
+								<td>
 									{{$supplier->product}}
 								</td>
 								<td>{{$supplier->name}}</td>
@@ -68,11 +69,11 @@
 			</div>
 		</div>
 		<!-- /Suppliers-->
-		
+
 	</div>
 </div>
 
-@endsection	
+@endsection
 
 @push('page-js')
 <script>
@@ -82,6 +83,7 @@
             serverSide: true,
             ajax: "{{route('suppliers.index')}}",
             columns: [
+                {data: 'id', name: 'id'},
                 {data: 'product', name: 'product'},
                 {data: 'name', name: 'name'},
                 {data: 'email', name: 'email'},
@@ -91,7 +93,7 @@
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
-        
+
     });
-</script> 
+</script>
 @endpush

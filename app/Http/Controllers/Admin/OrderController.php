@@ -35,6 +35,9 @@ class OrderController extends Controller
                     ->addColumn('total_price',function($order){
                         return $order->total_price;
                     })
+                    ->addColumn('total_profit',function($order){
+                        return $order->total_profit;
+                    })
                     ->addColumn('date',function($order){
                         return $order->date;
                     })

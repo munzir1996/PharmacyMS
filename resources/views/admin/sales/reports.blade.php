@@ -35,12 +35,14 @@
                                     <th>Medicine Name</th>
                                     <th>Quantity</th>
                                     <th>Total Price</th>
+                                    <th>Total Profit</th>
                                     <th>Date</th>
                                     <th>User</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <th>Total:</th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -60,6 +62,7 @@
                                             </td>
                                             <td>{{$sale->quantity}}</td>
                                             <td>{{($sale->total_price)}}</td>
+                                            <td>{{($sale->total_profit)}}</td>
                                             <td>{{date_format(date_create($sale->created_at),"d M, Y")}}</td>
                                             <td>{{$sale->user->name}}</td>
 
@@ -181,7 +184,7 @@
                         var api = this.api();
                         nb_cols = api.columns().nodes().length;
                         var j = 1;
-                        while (j <= 2) {
+                        while (j <= 3) {
                             var pageTotal = api
                                 .column(j, {page: 'current'})
                                 .data()

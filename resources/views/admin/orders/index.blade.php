@@ -34,6 +34,7 @@
 								<th>ID</th>
 								<th>Invoice ID</th>
 								<th>Total Price</th>
+								<th>Total Profit</th>
 								<th>Date</th>
 								<th>User</th>
 								<th class="action-btn">Action</th>
@@ -65,6 +66,7 @@
                 {data: 'id', name: 'id'},
                 {data: 'invoice_id', name: 'invoice_id'},
                 {data: 'total_price', name: 'total_price'},
+                {data: 'total_profit', name: 'total_profit'},
                 {data: 'date', name: 'date'},
                 {data: 'user', name: 'user'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},

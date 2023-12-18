@@ -25,6 +25,9 @@ class CategoryController extends Controller
                     ->addColumn('created_at',function($category){
                         return date_format(date_create($category->created_at),"d M,Y");
                     })
+                    ->addColumn('id',function($category){
+                        $category->id;
+                    })
                     ->addColumn('action',function ($row){
                         $editbtn = '<a data-id="'.$row->id.'" data-name="'.$row->name.'" href="javascript:void(0)" class="editbtn"><button class="btn btn-info"><i class="fas fa-edit"></i></button></a>';
                         $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('categories.destroy',$row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';

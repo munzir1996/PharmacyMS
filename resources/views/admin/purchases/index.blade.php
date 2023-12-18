@@ -35,12 +35,13 @@
 								<th>Category</th>
 								<th>Supplier</th>
 								<th>Purchase Cost</th>
+								<th>Unit Cost</th>
 								<th>Quantity</th>
 								<th>Expire Date</th>
 								<th class="action-btn">Action</th>
 							</tr>
 						</thead>
-                        <tfoot>
+                        {{-- <tfoot>
                             <th>Total:</th>
                             <th></th>
                             <th></th>
@@ -48,7 +49,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
-                        </tfoot>
+                        </tfoot> --}}
 						<tbody>
 						</tbody>
 					</table>
@@ -74,30 +75,31 @@
                 {data: 'category', name: 'category'},
                 {data: 'supplier', name: 'supplier'},
                 {data: 'cost_price', name: 'cost_price'},
+                {data: 'unit_price', name: 'unit_price'},
                 {data: 'quantity', name: 'quantity'},
 				{data: 'expiry_date', name: 'expiry_date'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],
-            "footerCallback": function (row, data, start, end, display) {
-                        var api = this.api();
-                        nb_cols = api.columns().nodes().length;
-                        var j = 4;
-                        while (j <= 5) {
-                            var pageTotal = api
-                                .column(j, {page: 'current'})
-                                .data()
-                                .reduce(function (a, b) {
-                                    var x = parseFloat(a);
-                                    var y = parseFloat(b)
-                                    // var y = isNaN(parseFloat(b))?0:parseFloat(b);
-                                    let result=x + y;
-                                    return result
-                                }, 0);
-                            // Update footer
-                            $(api.column(j).footer()).html(pageTotal);
-                            j++;
-                        }
-                    }
+            // "footerCallback": function (row, data, start, end, display) {
+            //             var api = this.api();
+            //             nb_cols = api.columns().nodes().length;
+            //             var j = 4;
+            //             while (j <= 5) {
+            //                 var pageTotal = api
+            //                     .column(j, {page: 'current'})
+            //                     .data()
+            //                     .reduce(function (a, b) {
+            //                         var x = parseFloat(a);
+            //                         var y = parseFloat(b)
+            //                         // var y = isNaN(parseFloat(b))?0:parseFloat(b);
+            //                         let result=x + y;
+            //                         return result
+            //                     }, 0);
+            //                 // Update footer
+            //                 $(api.column(j).footer()).html(pageTotal);
+            //                 j++;
+            //             }
+            //         }
         });
 
     });

@@ -20,6 +20,11 @@ class Order extends Model
         return $this->sales->sum('total_price');
     }
 
+    public function getTotalProfitAttribute()
+    {
+        return $this->sales->sum('total_profit');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

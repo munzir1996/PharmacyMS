@@ -47,6 +47,9 @@ class PurchaseController extends Controller
                 ->addColumn('cost_price',function($purchase){
                     return $purchase->cost_price;
                 })
+                ->addColumn('unit_price',function($purchase){
+                    return $purchase->unit_price;
+                })
                 ->addColumn('supplier',function($purchase){
                     return $purchase->supplier->name;
                 })
@@ -100,6 +103,7 @@ class PurchaseController extends Controller
             'product'=>'required|max:200',
             'category'=>'required',
             'cost_price'=>'required|min:1',
+            'unit_price'=>'required|min:1',
             'quantity'=>'required|min:1',
             'expiry_date'=>'required',
             'supplier'=>'required',
@@ -115,6 +119,7 @@ class PurchaseController extends Controller
             'category_id'=>$request->category,
             'supplier_id'=>$request->supplier,
             'cost_price'=>$request->cost_price,
+            'unit_price'=>$request->unit_price,
             'quantity'=>$request->quantity,
             'expiry_date'=>$request->expiry_date,
             'image'=>$imageName,
@@ -154,6 +159,7 @@ class PurchaseController extends Controller
             'product'=>'required|max:200',
             'category'=>'required',
             'cost_price'=>'required|min:1',
+            'unit_price'=>'required|min:1',
             'quantity'=>'required|min:1',
             'expiry_date'=>'required',
             'supplier'=>'required',
@@ -169,12 +175,13 @@ class PurchaseController extends Controller
             'category_id'=>$request->category,
             'supplier_id'=>$request->supplier,
             'cost_price'=>$request->cost_price,
+            'unit_price'=>$request->unit_price,
             'quantity'=>$request->quantity,
             'expiry_date'=>$request->expiry_date,
             'image'=>$imageName,
         ]);
         $notifications = notify("Purchase has been updated");
-        return redirect()->route('purchases.index')->with($notifications);
+        return redirect()->route('purchases.edit', $purchase->id)->with($notifications);
     }
 
     public function reports(){

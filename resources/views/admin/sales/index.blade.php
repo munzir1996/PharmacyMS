@@ -36,6 +36,7 @@
 								<th>Medicine Name</th>
 								<th>Quantity</th>
 								<th>Total Price</th>
+								<th>Total Profit</th>
 								<th>Date</th>
 								<th>User</th>
 								<th class="action-btn">Action</th>
@@ -43,6 +44,7 @@
 						</thead>
                         <tfoot>
                             <th>Total:</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -79,6 +81,7 @@
                 {data: 'product', name: 'product'},
                 {data: 'quantity', name: 'quantity'},
                 {data: 'total_price', name: 'total_price'},
+                {data: 'total_profit', name: 'total_profit'},
 				{data: 'date', name: 'date'},
 				{data: 'user', name: 'user'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -87,7 +90,7 @@
                         var api = this.api();
                         nb_cols = api.columns().nodes().length;
                         var j = 3;
-                        while (j <= 4) {
+                        while (j <= 5) {
                             var pageTotal = api
                                 .column(j, {page: 'current'})
                                 .data()

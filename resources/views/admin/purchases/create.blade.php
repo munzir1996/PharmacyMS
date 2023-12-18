@@ -58,16 +58,22 @@
 
 					<div class="service-fields mb-3">
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-lg-4">
 								<div class="form-group">
 									<label>Cost Price<span class="text-danger">*</span></label>
 									<input class="form-control" type="text" name="cost_price" required>
 								</div>
 							</div>
-							<div class="col-lg-6">
+							<div class="col-lg-4">
 								<div class="form-group">
 									<label>Quantity<span class="text-danger">*</span></label>
 									<input class="form-control" type="text" name="quantity" required>
+								</div>
+							</div>
+                            <div class="col-lg-4">
+								<div class="form-group">
+									<label>Unit Price<span class="text-danger">*</span></label>
+									<input class="form-control" type="text" name="unit_price" required>
 								</div>
 							</div>
 						</div>

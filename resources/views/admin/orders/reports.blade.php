@@ -35,12 +35,14 @@
                                     <th>ID</th>
                                     <th>Invoice ID</th>
                                     <th>Total Price</th>
+                                    <th>Total Profit</th>
                                     <th>Date</th>
                                     <th>User</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <th>Total:</th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -54,6 +56,7 @@
                                         </td>
                                         <td>{{$order->invoice_id}}</td>
                                         <td>{{$order->totalPrice}}</td>
+                                        <td>{{$order->totalProfit}}</td>
                                         <td>{{$order->date}}</td>
                                         <td>{{$order->user->name}}</td>
                                     </tr>
@@ -173,7 +176,7 @@
                         var api = this.api();
                         nb_cols = api.columns().nodes().length;
                         var j = 2;
-                        while (j <= 2) {
+                        while (j <= 3) {
                             var pageTotal = api
                                 .column(j, {page: 'current'})
                                 .data()

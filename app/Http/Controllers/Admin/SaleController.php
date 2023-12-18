@@ -53,6 +53,9 @@ class SaleController extends Controller
                     ->addColumn('total_price',function($sale){
                         return $sale->total_price;
                     })
+                    ->addColumn('total_profit',function($sale){
+                        return $sale->total_profit;
+                    })
                     ->addColumn('date',function($row){
                         return date_format(date_create($row->created_at),'d M, Y H:i:s');
                     })
@@ -112,7 +115,6 @@ class SaleController extends Controller
                 'sales' => json_decode($request->sales[0]),
                 'totalPrice' => $request->totalPrice,
                 'invoiceId' => $request->invoiceId,
-                // 'date' => $request->date,
             ]
         );
 
@@ -125,6 +127,9 @@ class SaleController extends Controller
         foreach ($salesCollect['sales'] as $sale) {
             $sold_product = Product::findOrFail($sale->product_id);
 
+            $totalPrice = ($sale->quantity) * ($sold_product->discountedPrice);
+            $totalUnitPrice = ($sale->quantity) * ($sold_product->purchase->unit_price);
+            $totalProfit = $totalPrice - $totalUnitPrice;
             /**update quantity of
                 sold item from
              purchases
@@ -145,14 +150,17 @@ class SaleController extends Controller
                 **/
 
                 // munzir
-                $total_price = ($sale->quantity) * ($sold_product->discountedPrice);
+                $totalPrice = ($sale->quantity) * ($sold_product->discountedPrice);
+                $totalUnitPrice = ($sale->quantity) * ($sold_product->purchase->unit_price);
+                $totalProfit = $totalPrice - $totalUnitPrice;
 
                 Sale::create([
                     'order_id' => $order->id,
                     'user_id'=>Auth::user()->id,
                     'product_id'=>$sale->product_id,
                     'quantity'=>$sale->quantity,
-                    'total_price'=>$total_price,
+                    'total_price'=>$totalPrice,
+                    'total_profit'=>$totalProfit,
                 ]);
 
                 $notification = notify("Product has been sold");
@@ -198,18 +206,19 @@ class SaleController extends Controller
     {
         $this->validate($request,[
             'product'=>'required',
-            'quantity'=>'required|integer|min:1'
+            'quantity'=>'required|integer|min:1',
+            'total_price'=>'required|min:1'
         ]);
         $sold_product = Product::find($request->product);
         /**
          * update quantity of sold item from purchases
         **/
         $purchased_item = Purchase::find($sold_product->purchase->id);
-        if(!empty($request->quantity)){
-            $new_quantity = ($purchased_item->quantity) - ($request->quantity);
-        }
-        $new_quantity = $sale->quantity;
+
+        $new_quantity = ($purchased_item->quantity + $sale->quantity) - ($request->quantity);
+        // $new_quantity = $sale->quantity;
         $notification = '';
+
         if (!($new_quantity < 0)){
             $purchased_item->update([
                 'quantity'=>$new_quantity,
@@ -218,14 +227,17 @@ class SaleController extends Controller
             /**
              * calcualting item's total price
             **/
-            if(!empty($request->quantity)){
-                $total_price = ($request->quantity) * ($sold_product->discountedPrice);
-            }
-            $total_price = $sale->total_price;
+
+            $totalPrice = $request->total_price;
+            $totalUnitPrice = ($request->quantity) * ($sold_product->purchase->unit_price);
+            $totalProfit = $totalPrice - $totalUnitPrice;
+
+
             $sale->update([
                 'product_id'=>$request->product,
                 'quantity'=>$request->quantity,
-                'total_price'=>$total_price,
+                'total_price'=>$request->total_price,
+                'total_profit'=>$totalProfit,
             ]);
 
             $notification = notify("Product has been updated");

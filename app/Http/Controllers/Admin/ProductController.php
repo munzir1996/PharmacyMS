@@ -218,11 +218,17 @@ class ProductController extends Controller
                         return $product->quantity;
                     }
                 })
-                // ->addColumn('expiry_date',function($product){
-                //     if(!empty($product)){
-                //         return date_format(date_create($product->expiry_date),'d M, Y');
-                //     }
-                // })
+                ->addColumn('price',function($product){
+                    return settings('app_currency','$').' '. $product->price;
+                })
+                ->addColumn('discountedPrice',function($product){
+                    return settings('app_currency','$').' '. $product->discountedPrice;
+                })
+                ->addColumn('expiry_date',function($product){
+                    if(!empty($product)){
+                        return date_format(date_create($product->expiry_date),'d M, Y');
+                    }
+                })
                 ->addColumn('action', function ($row) {
                     $editbtn = '<a href="'.route("products.edit", $row->id).'" class="editbtn"><button class="btn btn-info"><i class="fas fa-edit"></i></button></a>';
                     $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('products.destroy', $row->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';

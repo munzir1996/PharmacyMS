@@ -20,6 +20,7 @@ class CreateSalesTable extends Migration
             $table->foreignId('product_id')->nullable()->constrained()->onDelete('cascade');
             $table->integer('quantity');
             $table->decimal('total_price');
+            $table->decimal('total_profit');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -28,6 +28,7 @@
 					<table id="category-table" class="datatable table table-striped table-bordered table-hover table-center mb-0">
 						<thead>
 							<tr style="boder:1px solid black;">
+								<th>ID</th>
 								<th>Name</th>
 								<th>Created date</th>
 								<th class="text-center action-btn">Actions</th>
@@ -113,6 +114,7 @@
             serverSide: true,
             ajax: "{{route('categories.index')}}",
             columns: [
+                {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'created_at',name: 'created_at'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},

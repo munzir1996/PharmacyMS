@@ -2,7 +2,7 @@
 
 
 @push('page-css')
-    
+
 @endpush
 
 @push('page-header')
@@ -28,7 +28,7 @@
 						<div class="col-12">
 							<div class="form-group">
 								<label>Product <span class="text-danger">*</span></label>
-								<select class="select2 form-select form-control edit_product" name="product"> 
+								<select class="select2 form-select form-control edit_product" name="product">
 									@foreach ($products as $product)
 										@if (!empty($product->purchase))
 											@if (!($product->purchase->quantity <= 0))
@@ -45,17 +45,23 @@
 								<input type="number" class="form-control edit_quantity" value="{{$sale->quantity ?? '1'}}" name="quantity">
 							</div>
 						</div>
+                        <div class="col-12">
+							<div class="form-group">
+								<label>Total Price</label>
+								<input type="number" class="form-control edit_total_price" value="{{$sale->total_price}}" name="total_price">
+							</div>
+						</div>
 					</div>
 					<button type="submit" class="btn btn-success btn-block">Save Changes</button>
 				</form>
                 <!--/ Edit Sale -->
 			</div>
 		</div>
-	</div>			
+	</div>
 </div>
-@endsection	
+@endsection
 <!-- Visit codeastro.com for more projects -->
 
 @push('page-js')
-    
+
 @endpush

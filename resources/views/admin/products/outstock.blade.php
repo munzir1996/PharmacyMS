@@ -27,11 +27,13 @@
 					<table id="outstock-product" class=" table table-hover table-center mb-0">
 						<thead>
 							<tr>
-								<th>Brand Name</th>
+								<th>ID</th>
+								<th>Product Name</th>
 								<th>Category</th>
 								<th>Price</th>
 								<th>Quantity</th>
-								{{-- <th>Discount (%)</th> --}}
+								<th>Discount (%)</th>
+                                <th>Discounted Price</th>
 								<th>Expire</th>
 								<th class="action-btn">Action</th>
 							</tr>
@@ -60,11 +62,13 @@
             serverSide: true,
             ajax: "{{route('outstock')}}",
             columns: [
+                {data: 'id', name: 'id'},
                 {data: 'product', name: 'product'},
                 {data: 'category', name: 'category'},
                 {data: 'price', name: 'price'},
                 {data: 'quantity', name: 'quantity'},
-                // {data: 'discount', name: 'discount'},
+                {data: 'discount', name: 'discount'},
+                {data: 'discountedPrice', name: 'discountedPrice'},
 				{data: 'expiry_date', name: 'expiry_date'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]

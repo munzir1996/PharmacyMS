@@ -30,6 +30,7 @@
 					<table id="product-table" class="datatable table table-hover table-center mb-0">
 						<thead>
 							<tr>
+								<th>ID</th>
 								<th>Product Name</th>
 								<th>Category</th>
 								<th>Price</th>
@@ -63,6 +64,7 @@
             serverSide: true,
             ajax: "{{route('products.index')}}",
             columns: [
+                {data: 'id', name: 'id'},
                 {data: 'product', name: 'product'},
                 {data: 'category', name: 'category'},
                 {data: 'price', name: 'price'},
