@@ -49,10 +49,10 @@
                                 <th></th>
                             </tfoot>
                             <tbody>
-                                @foreach ($orders as $order)
+                                @foreach ($orders as $key => $order)
                                     <tr>
                                         <td>
-                                            {{$order->id}}
+                                            {{++$key}}
                                         </td>
                                         <td>{{$order->invoice_id}}</td>
                                         <td>{{$order->totalPrice}}</td>

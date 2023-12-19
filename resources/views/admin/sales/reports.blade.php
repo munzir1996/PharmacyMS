@@ -32,6 +32,7 @@
                         <table id="sales-table" class="datatable table table-hover table-center mb-0">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Medicine Name</th>
                                     <th>Quantity</th>
                                     <th>Total Price</th>
@@ -47,11 +48,13 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
                             </tfoot>
                             <tbody>
-                                @foreach ($sales as $sale)
+                                @foreach ($sales as $key => $sale)
                                     @if (!(empty($sale->product->purchase)))
                                         <tr>
+                                            <td>{{++$key}}</td>
                                             <td>
                                                 {{$sale->product->purchase->product}}
                                                 @if (!empty($sale->product->purchase->image))
@@ -183,8 +186,8 @@
             "footerCallback": function (row, data, start, end, display) {
                         var api = this.api();
                         nb_cols = api.columns().nodes().length;
-                        var j = 1;
-                        while (j <= 3) {
+                        var j = 2;
+                        while (j <= 4) {
                             var pageTotal = api
                                 .column(j, {page: 'current'})
                                 .data()
